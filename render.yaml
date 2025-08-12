@@ -1,0 +1,28 @@
+# render.yaml
+# このファイルはRenderのサービスを定義します。
+
+services:
+  - type: cron
+    name: hourly-chatwork-post
+    # cronが実行される時刻を設定します。
+    # この例では、毎時0分に実行するように設定しています。
+    # cronの書式については、Renderのドキュメントを参照してください。
+    schedule: "0 * * * *"
+    # 実行するコマンド
+    command: "python main.py"
+    # ビルド環境
+    # Python 3.10環境を使用します。
+    plan: free
+    # 環境変数をここで設定します。
+    # GitHubのSecretsなどから値を取得することも可能です。
+    envVars:
+      - key: CHATWORK_API_TOKEN
+        # RenderのEnvironmentタブで設定した環境変数を参照
+        fromService:
+          type: envVar
+          key: CHATWORK_API_TOKEN
+      - key: CHATWORK_ROOM_ID
+        # RenderのEnvironmentタブで設定した環境変数を参照
+        fromService:
+          type: envVar
+          key: CHATWORK_ROOM_ID
